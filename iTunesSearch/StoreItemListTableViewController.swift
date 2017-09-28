@@ -68,10 +68,15 @@ class StoreItemListTableViewController: UITableViewController {
         cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = item.artist
         
-        if let imageData = try? Data(contentsOf: item.artworkURL) {
-            let image = UIImage(data: imageData)
-            cell.imageView?.image = image
-        }
+        URLSession.shared.dataTask(with: item.artworkURL) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let imageData = data {
+                    let image = UIImage(data: imageData)
+                    cell.imageView?.image = image
+                }
+            }
+        }.resume()
+
     }
     
     // MARK: - Table view delegate
