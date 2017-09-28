@@ -67,8 +67,9 @@ class StoreItemListTableViewController: UITableViewController {
         
         cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = item.artist
+        cell.imageView?.image = #imageLiteral(resourceName: "gray")
         
-        URLSession.shared.dataTask(with: item.artworkURL) { (data, response, error) in
+        URLSession.shared.dataTask(with: item.hdArtworkURL) { (data, response, error) in
             DispatchQueue.main.async {
                 if let imageData = data {
                     let image = UIImage(data: imageData)
