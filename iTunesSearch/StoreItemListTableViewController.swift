@@ -73,6 +73,7 @@ class StoreItemListTableViewController: UITableViewController {
                 if let imageData = data {
                     let image = UIImage(data: imageData)
                     cell.imageView?.image = image
+                    cell.setNeedsLayout()
                 }
             }
         }.resume()
