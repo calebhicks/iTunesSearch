@@ -71,6 +71,13 @@ class StoreItemListTableViewController: UITableViewController {
         
         URLSession.shared.dataTask(with: item.hdArtworkURL) { (data, response, error) in
             DispatchQueue.main.async {
+                
+                if let currentIndexPath = self.tableView.indexPath(for: cell),
+                    currentIndexPath != indexPath {
+                    print("Got image for now-reused cell")
+                    return // Cell has been reused
+                }
+                
                 if let imageData = data {
                     let image = UIImage(data: imageData)
                     cell.imageView?.image = image
