@@ -14,6 +14,8 @@ class StoreItemListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.prefetchDataSource = self
+        
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
@@ -92,6 +94,16 @@ class StoreItemListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension StoreItemListTableViewController: UITableViewDataSourcePrefetching {
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            let item = items[indexPath.row]
+            URLSession.shared.dataTask(with: item.hdArtworkURL).resume()
+        }
     }
 }
 
