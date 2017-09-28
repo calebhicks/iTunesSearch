@@ -33,11 +33,13 @@ class StoreItemListTableViewController: UITableViewController {
             ]
             
             itemController.fetchItems(matching: query, completion: { (items) in
-                if let items = items {
-                    self.items = items
-                    self.tableView.reloadData()
-                } else {
-                    print("Unable to load data.")
+                DispatchQueue.main.async {
+                    if let items = items {
+                        self.items = items
+                        self.tableView.reloadData()
+                    } else {
+                        print("Unable to load data.")
+                    }
                 }
             })
         }
